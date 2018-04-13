@@ -9,15 +9,13 @@
 Routes: 
 
 GET /api/test
-Basic Auth: admin / [generated_admin_password]
-Can be used for testing if the API is responding and auth is successful
+ * Basic Auth: admin / [generated_admin_password]
+ * Can be used for testing if the API is responding and auth is successful
 
 POST /api/submit-project
-Basic Auth: admin / [generated_admin_password]
-
-Params: project_name, project_location, project_description, team_email
-
-Returns project_id and generated annotator link.
+* Basic Auth: admin / [generated_admin_password]
+* Params: project_name, project_location, project_description, team_email
+* Returns project_id and generated annotator link.
 
 <img src="https://raw.githubusercontent.com/anishathalye/gavel/docs/banner.png" width="450" height="150" alt="Gavel banner">
 
