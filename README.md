@@ -1,3 +1,12 @@
+**Stupid Hack**
+
+* Deploy using the button below
+* Generate admin password
+* Generate secret key
+* Change BASE_URL to the correct url
+* Press Deploy App
+
+
 <img src="https://raw.githubusercontent.com/anishathalye/gavel/docs/banner.png" width="450" height="150" alt="Gavel banner">
 
 **Gavel** is a project expo judging system.
