@@ -1,7 +1,63 @@
 from gavel import app
-from gavel.models import *
 import gavel.utils as utils
-from flask import Response
+from gavel.models import *
+from gavel.constants import *
+import json
+from flask import (
+    request,
+    session,
+    jsonify,
+    Response
+)
+
+@app.route('/api/test', methods=['GET'])
+@utils.requires_auth
+def api_test():
+    return jsonify(
+        test='Auth success'
+    )
+
+# Submit a project and create an annotator for that project
+@app.route('/api/submit-project', methods=['POST'])
+@utils.requires_auth
+def api_submit_project():
+
+        # Create item
+        _item = Item(
+            request.form['project_name'],
+            request.form['project_location'],
+            request.form['project_description'],
+        )
+        db.session.add(_item)
+
+        # Flush item to generate a database id for it 
+        db.session.flush()
+
+        # Create annotator
+        _annotator = Annotator(
+            'Project ' + str(_item.id) + ' annotator 1' , 
+            request.form['team_email'],
+            'Auto-generated annotator for project id: ' + str(_item.id)
+        )
+        # Add created project to ignore list
+        _annotator.ignore.append(_item)
+        db.session.add(_annotator)
+
+        # Commit item and annotator to DB
+        db.session.commit()
+
+        return jsonify(
+            status='success',
+            message='Created project and annotator',
+            data={
+                'project_id': _item.id,
+                'annotator_secret': _annotator.secret,
+                'annotator_link': '/login/' + _annotator.secret,
+            }
+        )
+
+def judging_open():
+    return Setting.value_of(SETTING_CLOSED) == SETTING_TRUE
 
 @app.route('/api/items.csv')
 @utils.requires_auth
