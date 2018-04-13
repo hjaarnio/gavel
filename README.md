@@ -15,7 +15,20 @@ GET /api/test
 POST /api/submit-project
 * Basic Auth: admin / [generated_admin_password]
 * Params: project_name, project_location, project_description, team_email
-* Returns project_id and generated annotator link.
+* Creates project and annotator
+* Returns: 
+
+```
+{
+    "data": {
+        "annotator_link": "/login/jb4feiody3t7fhzejdbd532ajs6cl55x",
+        "annotator_secret": "jb4feiody3t7fhzejdbd532ajs6cl55x",
+        "project_id": 2
+    },
+    "message": "Created project and annotator",
+    "status": "success"
+}
+```
 
 <img src="https://raw.githubusercontent.com/anishathalye/gavel/docs/banner.png" width="450" height="150" alt="Gavel banner">
 
