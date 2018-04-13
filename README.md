@@ -30,6 +30,12 @@ POST /api/submit-project
 }
 ```
 
+POST /admin/item_patch
+* Basic Auth: admin / [generated_admin_password]
+* Params: item_id, location (optional), name (optional), description (optional)
+* Edits a already submitted project
+* Returns HTML, so beware :DDD
+
 <img src="https://raw.githubusercontent.com/anishathalye/gavel/docs/banner.png" width="450" height="150" alt="Gavel banner">
 
 **Gavel** is a project expo judging system.
