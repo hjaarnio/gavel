@@ -30,12 +30,12 @@ def api_submit_project():
         )
         db.session.add(_item)
 
-        # Flush item to generate a database id for it 
+        # Flush item to generate a database id for it
         db.session.flush()
 
         # Create annotator
         _annotator = Annotator(
-            'Project ' + str(_item.id) + ' annotator 1' , 
+            'Project ' + str(_item.id) + ' annotator 1' ,
             request.form['team_email'],
             'Auto-generated annotator for project id: ' + str(_item.id)
         )
@@ -55,6 +55,28 @@ def api_submit_project():
                 'annotator_link': '/login/' + _annotator.secret,
             }
         )
+# Submit a project and create an annotator for that project
+@app.route('/api/edit-project', methods=['POST'])
+@utils.requires_auth
+def api_edit_project():
+    item = Item.by_id(request.form['item_id'])
+    if not item:
+        return utils.user_error('Item %s not found ' % request.form['item_id'])
+    if 'location' in request.form:
+        item.location = request.form['location']
+    if 'name' in request.form:
+        item.name = request.form['name']
+    if 'description' in request.form:
+        item.description = request.form['description']
+    db.session.commit()
+    return jsonify(
+        status='success',
+        message='Edited item',
+        data={
+            'project_id': _item.id
+        }
+    )
+
 
 def judging_open():
     return Setting.value_of(SETTING_CLOSED) == SETTING_TRUE
